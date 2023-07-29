@@ -7,13 +7,15 @@ import { ContactList } from './contactlist/ContactList';
 import { localStorageLoad } from '../js/system/localstorage';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
+import { selectContacts, selectServerData } from 'redux/selectors';
 import { addContact } from 'redux/contactsslice';
+import { getContacts } from 'redux/operations';
 
 export const App = () => {
   const localStorageLibraryName = 'contacts';
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const { data, isLoading, error } = useSelector(selectServerData);
 
   useEffect(() => {
     if (localStorageLibraryName in localStorage) {
@@ -21,13 +23,19 @@ export const App = () => {
       for (let element of libraryLocal) {
         dispatch(addContact(element));
       }
+      dispatch(getContacts());
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     console.log(contacts);
   }, [contacts]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className={css.app_holder}>
