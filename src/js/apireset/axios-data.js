@@ -1,6 +1,6 @@
 // import axios, { isCancel, AxiosError } from 'axios';
 import axios from 'axios';
-export async function axiosData(header, parameters) {
+export async function axiosData({ header, parameters, data }) {
   try {
     const response = await axios(
       {
@@ -8,6 +8,7 @@ export async function axiosData(header, parameters) {
         params: {
           ...parameters,
         },
+        data: { ...data },
       },
       { signal: AbortSignal.timeout(5000) }
     );
