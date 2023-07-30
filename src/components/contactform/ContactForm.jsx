@@ -45,7 +45,7 @@ export const ContactForm = () => {
       return;
     }
     Notiflix.Notify.success('Adding new contact');
-    dispatch(createContact({ id: id, name: name, number: number }));
+    dispatch(createContact({ name: name, number: number }));
     evt.target.reset();
   };
 

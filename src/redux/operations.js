@@ -6,6 +6,8 @@ import {
   headerDeafultURL,
 } from 'js/config/stdquery';
 
+import axios from 'axios';
+
 export const getContacts = createAsyncThunk(
   'fetchContacts/get',
   async (_, thunkAPI) => {
@@ -26,8 +28,18 @@ export const createContact = createAsyncThunk(
     try {
       const header = { ...headerDefaultPost, ...headerDeafultURL };
       header.url = '/contacts';
-      header.body = JSON.stringify(newContact);
-      const response = await axiosData(header);
+      // header.data = JSON.stringify(newContact);
+      const data = newContact;
+      // const response = await axiosData(header, params);
+      const response = await axios(header, data);
+      // fetch('https://64c560bfc853c26efadac8fe.mockapi.io/api/pml/v1/contacts', {
+      //   method: 'POST',
+      //   headers: { 'content-type': 'application/json' },
+      //   // Send your data in the request body as JSON
+      //   body: JSON.stringify(newContact),
+      // });
+
+      console.log(response);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
