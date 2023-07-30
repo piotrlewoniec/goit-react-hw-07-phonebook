@@ -3,7 +3,11 @@ import css from './ContactList.module.css';
 import { Button } from '../button/Button';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter, selectContacts } from 'redux/selectors';
+import {
+  selectFilter,
+  selectContacts,
+  selectServerContacts,
+} from 'redux/selectors';
 import { deleteContact } from 'redux/contactsslice';
 
 import {
@@ -29,6 +33,8 @@ export const ContactList = () => {
   const filter = useSelector(selectFilter);
   const contacts = useSelector(selectContacts);
 
+  const serverContacts = useSelector(selectServerContacts);
+
   const localStorageLibraryName = 'contacts';
 
   const handledeleteContact = evt => {
@@ -44,13 +50,13 @@ export const ContactList = () => {
     dispatch(deleteContact(id));
   };
 
-  if (contacts.length === 0) {
+  if (serverContacts.length === 0) {
     return <p className={css.info}>Contacts list empty</p>;
   } else {
     if (filter === '') {
       return (
         <ul className={css.holder}>
-          {contacts.map((contact, index) => (
+          {serverContacts.map((contact, index) => (
             <ContactListItem
               key={'id' + index} //{contact.id}
               contact={contact}
@@ -60,7 +66,7 @@ export const ContactList = () => {
         </ul>
       );
     } else {
-      const filteredContacts = contacts.filter(contact =>
+      const filteredContacts = serverContacts.filter(contact =>
         contact.name.toLowerCase().includes(filter.toLowerCase())
       );
       return (
@@ -76,6 +82,39 @@ export const ContactList = () => {
       );
     }
   }
+
+  // if (contacts.length === 0) {
+  //   return <p className={css.info}>Contacts list empty</p>;
+  // } else {
+  //   if (filter === '') {
+  //     return (
+  //       <ul className={css.holder}>
+  //         {contacts.map((contact, index) => (
+  //           <ContactListItem
+  //             key={'id' + index} //{contact.id}
+  //             contact={contact}
+  //             action={handledeleteContact}
+  //           />
+  //         ))}
+  //       </ul>
+  //     );
+  //   } else {
+  //     const filteredContacts = contacts.filter(contact =>
+  //       contact.name.toLowerCase().includes(filter.toLowerCase())
+  //     );
+  //     return (
+  //       <ul className={css.holder}>
+  //         {filteredContacts.map((contact, index) => (
+  //           <ContactListItem
+  //             key={'id' + index} //{contact.id}
+  //             contact={contact}
+  //             action={deleteContact}
+  //           />
+  //         ))}
+  //       </ul>
+  //     );
+  //   }
+  // }
 };
 // ContactList.propTypes = {
 //   contacts: PropTypes.array,

@@ -5,6 +5,11 @@ export const headerDefaultGet = {
   accept: 'application/json',
 };
 
+export const headerDefaultPost = {
+  method: 'post',
+  'content-type': 'application/json',
+};
+
 export const headerDeafultURL = {
   baseURL: `https://${apikeyMOCKAPI}.mockapi.io/api/pml/v1/`,
 };
