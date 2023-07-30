@@ -14,7 +14,7 @@ export const getContacts = createAsyncThunk(
     try {
       const header = { ...headerDefaultGet, ...headerDeafultURL };
       header.url = '/contacts';
-      const response = await axiosData(header);
+      const response = await axiosData({ header: header });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -29,9 +29,9 @@ export const createContact = createAsyncThunk(
       const header = { ...headerDefaultPost, ...headerDeafultURL };
       header.url = '/contacts';
       // header.data = JSON.stringify(newContact);
-      const data = newContact;
-      // const response = await axiosData(header, params);
-      const response = await axios(header, data);
+      const data = JSON.stringify(newContact);
+      // const response = await axiosData({header:header, data:new});
+      const response = await axios({ header: header, data: newContact });
       // fetch('https://64c560bfc853c26efadac8fe.mockapi.io/api/pml/v1/contacts', {
       //   method: 'POST',
       //   headers: { 'content-type': 'application/json' },
