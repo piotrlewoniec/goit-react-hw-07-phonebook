@@ -10,6 +10,8 @@ import {
 } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsslice';
 
+import { removeContact } from 'redux/operations';
+
 import {
   localStorageGetStatus,
   localStorageRemove,
@@ -37,17 +39,24 @@ export const ContactList = () => {
 
   const localStorageLibraryName = 'contacts';
 
+  // const handledeleteContact = evt => {
+  //   evt.preventDefault();
+  //   const id = evt.target.dataset.id;
+
+  //   const element = localStorageGetStatus(localStorageLibraryName, id, 'id'); // libraryName, element, keySearch
+  //   if (element !== undefined) {
+  //     localStorageRemove(localStorageLibraryName, id, 'id');
+  //   } else {
+  //     Notiflix.Notify.info('Contact does not exists in localstorage');
+  //   }
+  //   dispatch(deleteContact(id));
+  // };
+
   const handledeleteContact = evt => {
     evt.preventDefault();
     const id = evt.target.dataset.id;
 
-    const element = localStorageGetStatus(localStorageLibraryName, id, 'id'); // libraryName, element, keySearch
-    if (element !== undefined) {
-      localStorageRemove(localStorageLibraryName, id, 'id');
-    } else {
-      Notiflix.Notify.info('Contact does not exists in localstorage');
-    }
-    dispatch(deleteContact(id));
+    dispatch(removeContact(id));
   };
 
   if (serverContacts.length === 0) {
@@ -75,7 +84,7 @@ export const ContactList = () => {
             <ContactListItem
               key={'id' + index} //{contact.id}
               contact={contact}
-              action={deleteContact}
+              action={handledeleteContact}
             />
           ))}
         </ul>

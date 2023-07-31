@@ -18,24 +18,24 @@ export const App = () => {
   const { data, isLoading, error } = useSelector(selectServerData);
 
   useEffect(() => {
-    if (localStorageLibraryName in localStorage) {
-      const libraryLocal = localStorageLoad(localStorageLibraryName);
-      for (let element of libraryLocal) {
-        dispatch(addContact(element));
-      }
-      dispatch(getContacts());
-    }
+    // if (localStorageLibraryName in localStorage) {
+    //   const libraryLocal = localStorageLoad(localStorageLibraryName);
+    //   for (let element of libraryLocal) {
+    //     dispatch(addContact(element));
+    //   }
 
+    // }
+    dispatch(getContacts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    console.log(contacts);
-  }, [contacts]);
+  // useEffect(() => {
+  //   console.log(contacts);
+  // }, [contacts]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <div className={css.app_holder}>
@@ -47,6 +47,17 @@ export const App = () => {
     </div>
   );
 };
+
+// Książka telefoniczna
+// Wykonaj refaktor kodu aplikacji "Książka telefoniczna". Usuń kod odpowiadający za przechowywanie i czytanie kontaktów z lokalnego magazynu i dodaj pracę z backendem do zapisywania kontaktów.
+
+// Stwórz backend dla projektu przy pomocy serwisu UI mockapi.io. Zarejestruj się, wykorzystując swoje konto na GitHub.
+// https://mockapi.io/
+// Stwórz zasób contacts, aby otrzymać endpoint /contacts. Wykorzystaj konstruktor zasobów i opisz obiekt kontaktu jak na ilustracji.
+
+// Wykorzystaj funkcję createAsyncThunk do współpracy z backendem i asynchronicznymi zapytaniami.
+
+// https://redux-toolkit.js.org/api/createAsyncThunk
 
 // Książka telefoniczna
 // Przeprowadź refaktor kodu aplikacji "Książka telefoniczna", dodając zarządzanie stanem przy pomocy biblioteki Redux Toolkit.

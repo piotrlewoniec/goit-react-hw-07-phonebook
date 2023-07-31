@@ -10,6 +10,11 @@ export const headerDefaultPost = {
   'content-type': 'application/json',
 };
 
+export const headerDefaultDelete = {
+  method: 'delete',
+  'content-type': 'application/json',
+};
+
 export const headerDeafultURL = {
   baseURL: `https://${apikeyMOCKAPI}.mockapi.io/api/pml/v1/`,
 };

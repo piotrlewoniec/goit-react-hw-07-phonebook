@@ -3,6 +3,7 @@ import { axiosData } from 'js/apireset/axios-data';
 import {
   headerDefaultGet,
   headerDefaultPost,
+  headerDefaultDelete,
   headerDeafultURL,
 } from 'js/config/stdquery';
 
@@ -31,15 +32,27 @@ export const createContact = createAsyncThunk(
       // header.data = JSON.stringify(newContact);
       const data = JSON.stringify(newContact);
       // const response = await axiosData({header:header, data:new});
-      const response = await axios({ header: header, data: newContact });
+      const response = await axiosData({ header: header, data: newContact });
       // fetch('https://64c560bfc853c26efadac8fe.mockapi.io/api/pml/v1/contacts', {
       //   method: 'POST',
       //   headers: { 'content-type': 'application/json' },
       //   // Send your data in the request body as JSON
       //   body: JSON.stringify(newContact),
       // });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-      console.log(response);
+export const removeContact = createAsyncThunk(
+  'fetchContacts/remove',
+  async (id, thunkAPI) => {
+    try {
+      const header = { ...headerDefaultDelete, ...headerDeafultURL };
+      header.url = `/contacts/${id}`;
+      const response = await axiosData({ header: header });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
