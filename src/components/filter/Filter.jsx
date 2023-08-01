@@ -1,4 +1,3 @@
-// import PropTypes from 'prop-types';
 import css from './Filter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'redux/selectors';
@@ -24,8 +23,3 @@ export const Filter = () => {
     </>
   );
 };
-
-// Filter.propTypes = {
-//   inputValue: PropTypes.string,
-//   action: PropTypes.func,
-// };

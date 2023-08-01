@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getContacts, createContact, removeContact } from './operations';
+import Notiflix from 'notiflix';
 
 const handlePending = state => {
   state.isLoading = true;
@@ -25,7 +26,11 @@ const fetchContactsSlice = createSlice({
       .addCase(getContacts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.data = action.payload;
+        if (action.payload) {
+          state.data = action.payload;
+        } else {
+          state.data = [];
+        }
       })
       .addCase(getContacts.rejected, handleRejected)
 
@@ -33,7 +38,10 @@ const fetchContactsSlice = createSlice({
       .addCase(createContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        // state.data.push(action.payload);
+        if (action.payload) {
+          Notiflix.Notify.success('Adding new contact');
+          state.data.push(action.payload);
+        }
       })
       .addCase(createContact.rejected, handleRejected)
 
@@ -41,7 +49,15 @@ const fetchContactsSlice = createSlice({
       .addCase(removeContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        // state.data.push(action.payload);
+        if (action.payload) {
+          Notiflix.Notify.failure('Deleting contact');
+          const index = state.data.findIndex(
+            element => element.id === action.payload.id
+          );
+          if (index > -1) {
+            state.data.splice(index, 1);
+          }
+        }
       })
       .addCase(removeContact.rejected, handleRejected);
 

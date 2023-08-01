@@ -4,38 +4,20 @@ import css from './App.module.css';
 import { ContactForm } from './contactform/ContactForm';
 import { Filter } from './filter/Filter';
 import { ContactList } from './contactlist/ContactList';
-import { localStorageLoad } from '../js/system/localstorage';
+import { Loader } from './loader/Loader';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts, selectServerData } from 'redux/selectors';
-import { addContact } from 'redux/contactsslice';
+import { selectServerData } from 'redux/selectors';
 import { getContacts } from 'redux/operations';
 
 export const App = () => {
-  const localStorageLibraryName = 'contacts';
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const { data, isLoading, error } = useSelector(selectServerData);
+  const { isLoading, error } = useSelector(selectServerData);
 
   useEffect(() => {
-    // if (localStorageLibraryName in localStorage) {
-    //   const libraryLocal = localStorageLoad(localStorageLibraryName);
-    //   for (let element of libraryLocal) {
-    //     dispatch(addContact(element));
-    //   }
-
-    // }
     dispatch(getContacts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   console.log(contacts);
-  // }, [contacts]);
-
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
 
   return (
     <div className={css.app_holder}>
@@ -44,6 +26,8 @@ export const App = () => {
       <h2 className={css.app_subtitle}>Contacts</h2>
       <Filter />
       <ContactList />
+      {isLoading && <Loader name="RotatingLines" />}
+      {error && <p>Communication error. {error}</p>}
     </div>
   );
 };
